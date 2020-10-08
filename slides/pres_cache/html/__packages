@@ -1,0 +1,6 @@
+base
+ggplot2
+kableExtra
+dplyr
+countdown
+knitr
