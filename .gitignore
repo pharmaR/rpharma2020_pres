@@ -5,3 +5,5 @@
 
 # Custom
 *.html
+
+*_cache
