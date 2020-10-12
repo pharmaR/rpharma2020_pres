@@ -99,12 +99,9 @@ class: development, middle, center
 
 - Implementation
 
-- Getting involved
+- The Future
 
----
-layout: false
-class: inverse, middle, center
-# The R Validation Hub
+
 
 ---
 # Mission
@@ -134,24 +131,6 @@ class: inverse, middle, center
 <img src="images/efspi.png" alt="R Validation Hub" height=80 style="margin:5px 50px"> 
 <img src="images/rconsort.png" alt="R Validation Hub" height=80 style="margin:5px 50px">
 
----
-# Resources
-
-- Keep up to date at https://www.pharmar.org/
-    - Blog posts
-    - Presentations
-    - White paper
-    
-    
-- Tools available on [GitHub](https://github.com/pharmaR)
-    - The riskmetric R Package
-    - Risk Assessment App [coming soon]
-    
-
-- To contribute, send a message to [psi.aims.r.validation@gmail.com](mailto:psi.aims.r.validation@gmail.com)
-
-    
-- Else, join the [mailing list](https://lists.r-consortium.org/g/RConsortium-Validation-Hub) today!
 
 
 <!---------------------------------------------------------------------------->
@@ -160,54 +139,24 @@ class: inverse, middle, center
 ---
 # Regulations
 
-FDA: “…statistical software is not explicitly discussed in [21 CFR Part 11]”
+FDA: “…statistical software is **not explicitly discussed** in [21 CFR Part 11]”
 
-ICH: “… should be reliable, and documentation of appropriate software testing procedures should be available”
+ICH: “… **should be reliable**, and documentation of **appropriate software testing procedures** should be available”
 
 <a href = "https://www.fda.gov/downloads/ForIndustry/DataStandards/StudyDataStandards/UCM587506.pdf"><img src="images/fda_clarifying.png" alt="source: FDA Statistical Software Clarifying Statement" height=400 ></a>
 
 
----
-# Further Reading
-
-The following have played an important role in the formation of the white paper and this workshop
-
-
-- **ICH**
-    - [E9](https://www.ema.europa.eu/en/ich-e9-statistical-principles-clinical-trials#current-version-section)
-
-
-- **FDA**
-    - [FDA Statistical Software Clarifying Statement](https://www.fda.gov/downloads/ForIndustry/DataStandards/StudyDataStandards/UCM587506.pdf)
-    - [21 CFR Part 11](https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfcfr/CFRSearch.cfm?CFRPart=11&showFR=1)
-    - [Guidance for Industry Part 11, Electronic Records; Electronic Signatures — Scope and Application](https://www.fda.gov/media/75414/download)
-    - [Glossary of Computer System Software Development Terminology](https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/inspection-guides/glossary-computer-system-software-development-terminology-895)
-    - [General Principles of Software Validation; Final Guidance for Industry and FDA Staff](https://www.fda.gov/media/73141/download)
-
-
-- **EMA**
-    - [Notice to sponsors on validation and qualification of computerised systems used in clinical trials](https://www.ema.europa.eu/en/documents/regulatory-procedural-guideline/notice-sponsors-validation-qualification-computerised-systems-used-clinical-trials_en.pdf)
-    - [Q&A: Good clinical practice (GCP)](https://www.ema.europa.eu/en/human-regulatory/research-development/compliance/good-clinical-practice/qa-good-clinical-practice-gcp)
 
 
 ---
-# Definitions
+# Validation / Qualification / Verification
+
+## The Validation Misnomer
 
 <blockquote>
 "The term <b>qualification</b> is used in this notice to describe <b>verification</b> of system functionality. The term <b>validation</b> is used to describe the process of establishing and documenting that the specified requirements of a computerised system can be consistently fulfilled from design until decommissioning of the system or transition to a new system (ICH E6(R2), section 1.65), i.e. it operates to defined specifications and defined procedures (SOPs) by a trained user."
 .right[-- <cite>[Notice to sponsors on validation and qualification of computerised systems used in clinical trials, EMA, 07-Apr-2020](https://www.ema.europa.eu/en/documents/regulatory-procedural-guideline/notice-sponsors-validation-qualification-computerised-systems-used-clinical-trials_en.pdf)</cite>]
 </blockquote>
-
-- We might **verify**
-    - the results of an analysis by double programming
-    - that if I call a function/macro with specific parameters then I get the expected result 
-- We might **qualify**
-    - a software installation, **e.g. SAS/R/python **
-    - a 'multiple use' utility, e.g. a SAS macro / R function
-- We might **validate**
-    - a controlled workflow environment, e.g. a Statistical Computing Environment (SCE) 
-    - a GxP application, eg a Shiny app
-
 
 
 
@@ -227,80 +176,8 @@ class: inverse, middle, center
 
 ]
 
-
-
-
-
-<!---------------------------------------------------------------------------->
 ---
-layout: false
-class: inverse, middle, center
-# Implementation
-
-
-
----
-layout: false
-class: inverse, middle, center
-# Getting Involved
-
-
-
----
-# What next?
-
-- The R Validation Hub is looking for volunteers to
-    - Develop the risk assessment app and reporting 
-    - Extend riskmetric
-    - **Contribute to our testing white paper**
-    - **Help develop a standardised testing framework**
-        - Submit tests to this framework
-    - Share success stories via our blog
-- Send a message to [psi.aims.r.validation@gmail.com](mailto:psi.aims.r.validation@gmail.com)
-
-- Join our [mailing list](https://lists.r-consortium.org/g/RConsortium-Validation-Hub)
-    
-
----
-# Acknowledgements
-
-- Marly Gotti (Biogen) for this week's workshop and this slide template
-    - Our TAs from the workshop
-- The R Validation Hub (PSI, EFR Consortium)
-
-Thanks to all those involved in pulling together the R/Pharma conference!
-
-
-
-
----
-layout: false
-class: inverse, middle, center
-# Poll
-
-<!---------------------------------------------------------------------------->
-
-
-
-
-
-
-
-
-
-
-<!-- --- -->
-<!-- #	Trust / Reliability -->
-
-<!-- How can we establish trust in a resource? -->
-
-<!-- - A vendor audit  -->
-<!-- - Prior experience -->
-<!-- - Expansive testing -->
-<!-- - ... -->
-
----
-# Regulatory perspectives
+# Why Risk-based?
 
 ## FDA
 
@@ -318,18 +195,6 @@ class: inverse, middle, center
 
 - Note: The above documents describe computerized systems and neither addresses address programming languages directly
 
-<!-- --- -->
-<!-- # What is a Risk-based Approach? -->
-
-<!-- - All validation is risk-based! -->
-
-
-<!-- - A prioritisation of our testing strategy based on what we already know -->
-<!--     - How well is the package developed / tested? -->
-<!--     - How much additional exposure has it had within the user community? -->
-
-
-<!-- - We generally approach commercial software this way already! -->
 
 ---
 # Validation, R and R Packages
@@ -342,7 +207,7 @@ This can be broken down into three core components:
 2.	Reproducibility
 3.	Traceability 
 
-The focus of the white paper is accuracy.
+**The focus of the white paper is accuracy.**
 
 
 ---
@@ -394,40 +259,41 @@ We propose to assess the risk of contributed R packages based on four criteria:
 
 -	Testing (Also part of an SDLC)
 
+<!-- --- -->
+<!-- # Pupose -->
 
----
-# Pupose
-
-- What will the package used for?
-
-
-- Is it...
+<!-- - What will the package used for? -->
 
 
-1. Statistical?
-2. Non-statistical?
+<!-- - Is it... -->
 
 
-- Hence, how difficult is it for an end user to identify errors?
+<!-- 1. Statistical? -->
+<!-- 2. Non-statistical? -->
 
 
-> "Tests should be written for all statistical modelling functions within an Intended for Use Statistical Package, regardless of the risk assessment."
+<!-- - Hence, how difficult is it for an end user to identify errors? -->
 
 
-- To be challenged later...
+<!-- > "Tests should be written for all statistical modelling functions within an Intended for Use Statistical Package, regardless of the risk assessment." -->
 
----
-# Maintenance / Testing / Community Usage
 
-- Development and **maintenance** best practice are essential for any software
-    - How are bugs managed?
-    - What is the documentation like?
-    - Is the source code on GitHub?
-- **Testing** is a crucial part of an SDLC and another specific maintenance best practice metric
+<!-- - To be challenged later... -->
 
-- Increased exposure to users (**community usage**) helps to reduce risk
 
-- More on these coming up...
+
+<!-- --- -->
+<!-- # Maintenance / Testing / Community Usage -->
+
+<!-- - Development and **maintenance** best practice are essential for any software -->
+<!--     - How are bugs managed? -->
+<!--     - What is the documentation like? -->
+<!--     - Is the source code on GitHub? -->
+<!-- - **Testing** is a crucial part of an SDLC and another specific maintenance best practice metric -->
+
+<!-- - Increased exposure to users (**community usage**) helps to reduce risk -->
+
+<!-- - More on these coming up... -->
 
 ---
 # Proposed Workflow
@@ -435,12 +301,215 @@ We propose to assess the risk of contributed R packages based on four criteria:
 <img src="images/Assessing-package-accuracy.png" alt="source: Assessing Package Accuracy">
 
 
+
+
+<!---------------------------------------------------------------------------->
 ---
 layout: false
 class: inverse, middle, center
-# BREAK
+# Implementation
 
-```{r, echo = FALSE, message = FALSE, warning = FALSE}
-countdown::countdown(minutes = 10, seconds = 0)
+
+---
+
+# The **riskmetric** package
+
+- [pharmar.github.io/riskmetric/](https://pharmar.github.io/riskmetric/)
+
+
+- Measures the risk of using an R package. 
+
+
+- Calculated based on a number of metrics meant to evaluate development best practices, code documentation, community engagement, and development sustainability. 
+
+
+- This risk does *not* represent
+    - the risk of damaging the sytem in which the package is installed, or
+    - the risk that the internal (statistical) functions are correct.
+
+
+- Example:
+  - low risk package: `ggplot2` (risk = 0.21)
+  - High risk package: `tidymodels/stacks` (risk = 0.9). Does this mean we can't use it?
+
+---
+
+# Example using **riskmetric**
+
+```{r, message = FALSE, warning = FALSE, cache = TRUE}
+# devtools::install_github("pharmar/riskmetric")
+
+library(riskmetric)
+
+metrics <- pkg_ref(c("ggplot2", "stacks")) %>%
+  as_tibble() %>%
+  pkg_assess() %>%
+  pkg_score()
+
+metrics
 ```
+
+<!-- TODO -->
+<!-- Can you provide a version number to riskmetric? -->
+<!-- Describe each function above -->
+
+---
+
+# Example using **riskmetric**
+
+```
+# devtools::install_github("pharmar/riskmetric")
+
+library(riskmetric)
+
+metrics <- pkg_ref(c("ggplot2", "stacks")) %>%
+  as_tibble() %>%
+  pkg_assess() %>%
+  pkg_score()
+
+metrics
+ 
+```
+
+<br>
+
+ ```{r, echo = FALSE, message = FALSE, warning = FALSE, cache = TRUE}
+ 
+ metrics %>%
+ mutate(risk = pkg_score) %>%
+ select(package, version, risk, downloads_1yr, bugs_status, bugs_status, has_maintainer, news_current, has_vignettes, export_help) %>%
+ mutate("..." = "...") %>%
+ kbl(., booktabs = T) %>%
+ kable_styling(c("striped", "hover"), font_size = 15)
+ 
+ ```
+
+---
+
+# The Risk Assessment Shiny Application
+
+- Front end visualisations for `riskmetric`
+
+- User feedback
+
+- A database to store collected metrics / comments
+
+- Reporting capabilities
+
+
+---
+background-image: url("images/risk_assess.png")
+background-size: 98% 
+background-position: 50% 50%
+# The Risk Assessment App
+
+
+
+---
+# Testing
+
+- Focus area
+
+- Current discussions
+    - May be able to make use of author tests in some circumstances
+    - Testing for stats packages may not *always* be required
+    - Testing to feed back into risk assessment
+
+- Aim to write white paper for release 1H2021
+
+- Test framework to be developed based on testthat
+
+---
+layout: false
+class: inverse, middle, center
+# The Future
+
+
+---
+background-image: url("images/roadmap.jpg")
+background-position: 90% 16%
+# Our Roadmap
+
+## Process and Communication
+.grey[
+- Publish website
+- Agree high level process
+- White paper for overall approach
+]
+- White paper on testing
+- [TBC] stats modelling handbook
+
+## Qualification Tools
+.grey[
+- Key risks added to riskmetric 
+- Release Risk Assessment app v1
+]
+- CRAN release of riskmetric
+- Modularisation of app for co-development with riskmetric
+- Create test framework
+- Release first batch of tests
+    
+
+
+
+---
+# Join us!
+
+- Keep up to date at https://www.pharmar.org/
+    - Blog posts
+    - Presentations
+    - White paper
+    
+    
+- Tools available on [GitHub](https://github.com/pharmaR)
+    - The riskmetric R Package
+    - Risk Assessment App 
+    
+
+- To contribute, send a message to [psi.aims.r.validation@gmail.com](mailto:psi.aims.r.validation@gmail.com)
+
+    
+- Else, join the [mailing list](https://lists.r-consortium.org/g/RConsortium-Validation-Hub) today!
+
+---
+# Acknowledgements
+
+- Marly Gotti (Biogen) for this week's workshop and this slide template
+    - Our TAs from the workshop
+
+
+- The R Validation Hub (PSI, EFR Consortium)
+
+
+Thanks to all those involved in pulling together the R/Pharma conference!
+
+
+
+---
+# Further Reading
+
+The following have played an important role in the formation of the white paper and this workshop
+
+
+- **ICH**
+    - [E9](https://www.ema.europa.eu/en/ich-e9-statistical-principles-clinical-trials#current-version-section)
+
+
+- **FDA**
+    - [FDA Statistical Software Clarifying Statement](https://www.fda.gov/downloads/ForIndustry/DataStandards/StudyDataStandards/UCM587506.pdf)
+    - [21 CFR Part 11](https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfcfr/CFRSearch.cfm?CFRPart=11&showFR=1)
+    - [Guidance for Industry Part 11, Electronic Records; Electronic Signatures — Scope and Application](https://www.fda.gov/media/75414/download)
+    - [Glossary of Computer System Software Development Terminology](https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/inspection-guides/glossary-computer-system-software-development-terminology-895)
+    - [General Principles of Software Validation; Final Guidance for Industry and FDA Staff](https://www.fda.gov/media/73141/download)
+
+
+- **EMA**
+    - [Notice to sponsors on validation and qualification of computerised systems used in clinical trials](https://www.ema.europa.eu/en/documents/regulatory-procedural-guideline/notice-sponsors-validation-qualification-computerised-systems-used-clinical-trials_en.pdf)
+    - [Q&A: Good clinical practice (GCP)](https://www.ema.europa.eu/en/human-regulatory/research-development/compliance/good-clinical-practice/qa-good-clinical-practice-gcp)
+
+
+
+
+
+
 
