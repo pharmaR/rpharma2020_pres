@@ -1,5 +1,5 @@
 ---
-pagetitle: "Introduction"
+pagetitle: "RVH Implementation"
 output:
   xaringan::moon_reader:
     css: ["./css/default.css",
@@ -55,7 +55,7 @@ R/Pharma, 2020 <br>
 <div class="row">
 <div class="column">
   <img class="profile" src="images/andy-nicholls.jpg" alt="Andy Nicholls">
-  <div class="profile-name">Andy Nicholls</div>
+  <div class="profile-name">Andy Nicholls<br>On behalf of the R Validation Hub</div>
 </div>
 
 
@@ -68,24 +68,24 @@ R/Pharma, 2020 <br>
 ---
 layout: false
 class: development, middle, center
-# WARNING 1
+# WARNING
 
 ## If you attended last week's workshop, don't expect anything new!
 
 
----
-layout: false
-class: development, middle, center
-# WARNING 2
+<!-- --- -->
+<!-- layout: false -->
+<!-- class: development, middle, center -->
+<!-- # WARNING 2 -->
 
-## Our workshop was 3 hours, I have 20 minutes...
+<!-- ## Our workshop was 3 hours, I have 20 minutes... -->
 
----
-layout: false
-class: development, middle, center
-# WARNING 2
+<!-- --- -->
+<!-- layout: false -->
+<!-- class: development, middle, center -->
+<!-- # WARNING 2 -->
 
-## Our workshop was 3 hours, I have 19 minutes...
+<!-- ## Our workshop was 3 hours, I have 19 minutes... -->
 
 
 
@@ -148,15 +148,15 @@ ICH: “… **should be reliable**, and documentation of **appropriate software 
 
 
 
----
-# Validation / Qualification / Verification
+<!-- --- -->
+<!-- # Validation / Qualification / Verification -->
 
-## The Validation Misnomer
+<!-- ## The Validation Misnomer -->
 
-<blockquote>
-"The term <b>qualification</b> is used in this notice to describe <b>verification</b> of system functionality. The term <b>validation</b> is used to describe the process of establishing and documenting that the specified requirements of a computerised system can be consistently fulfilled from design until decommissioning of the system or transition to a new system (ICH E6(R2), section 1.65), i.e. it operates to defined specifications and defined procedures (SOPs) by a trained user."
-.right[-- <cite>[Notice to sponsors on validation and qualification of computerised systems used in clinical trials, EMA, 07-Apr-2020](https://www.ema.europa.eu/en/documents/regulatory-procedural-guideline/notice-sponsors-validation-qualification-computerised-systems-used-clinical-trials_en.pdf)</cite>]
-</blockquote>
+<!-- <blockquote> -->
+<!-- "The term <b>qualification</b> is used in this notice to describe <b>verification</b> of system functionality. The term <b>validation</b> is used to describe the process of establishing and documenting that the specified requirements of a computerised system can be consistently fulfilled from design until decommissioning of the system or transition to a new system (ICH E6(R2), section 1.65), i.e. it operates to defined specifications and defined procedures (SOPs) by a trained user." -->
+<!-- .right[-- <cite>[Notice to sponsors on validation and qualification of computerised systems used in clinical trials, EMA, 07-Apr-2020](https://www.ema.europa.eu/en/documents/regulatory-procedural-guideline/notice-sponsors-validation-qualification-computerised-systems-used-clinical-trials_en.pdf)</cite>] -->
+<!-- </blockquote> -->
 
 
 
@@ -176,38 +176,19 @@ class: inverse, middle, center
 
 ]
 
----
-# Why Risk-based?
 
-## FDA
+<!-- --- -->
+<!-- # Validation, R and R Packages -->
 
-<blockquote>
-"We recommend that you base your approach on a justified and <b>documented risk assessment</b> and a determination of the potential of the system to affect product quality and safety, and record integrity"
-.right[-- <cite>[Guidance for Industry Part 11, Electronic Records; Electronic Signatures — Scope and Application](https://www.fda.gov/media/75414/download)</cite>]
-</blockquote>
+<!-- The FDA provide a clear definition of validation in the [Glossary of Computer System Software Development Terminology](https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/inspection-guides/glossary-computer-system-software-development-terminology-895).  -->
 
-## EMA
+<!-- This can be broken down into three core components: -->
 
-<blockquote>
-"The sponsor may rely on qualification documentation provided by the vendor, if the qualification activities performed by the vendor have been assessed as adequate. However, the sponsor may also have to perform additional qualification (and validation) activities based on a <b>documented risk assessment.</b>"
-.right[-- <cite>[Notice to sponsors on validation and qualification of computerised systems used in clinical trials, EMA, 07-Apr-2020](https://www.ema.europa.eu/en/documents/regulatory-procedural-guideline/notice-sponsors-validation-qualification-computerised-systems-used-clinical-trials_en.pdf)</cite>]
-</blockquote>
+<!-- 1.	Accuracy -->
+<!-- 2.	Reproducibility -->
+<!-- 3.	Traceability  -->
 
-- Note: The above documents describe computerized systems and neither addresses address programming languages directly
-
-
----
-# Validation, R and R Packages
-
-The FDA provide a clear definition of validation in the [Glossary of Computer System Software Development Terminology](https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/inspection-guides/glossary-computer-system-software-development-terminology-895). 
-
-This can be broken down into three core components:
-
-1.	Accuracy
-2.	Reproducibility
-3.	Traceability 
-
-**The focus of the white paper is accuracy.**
+<!-- **The focus of the white paper is accuracy.** -->
 
 
 ---
@@ -234,33 +215,56 @@ We propose a risk-based approach to establish accuracy/validity for contributed 
 .footnote[
 *Source: German, D.M. & Adams, Bram & Hassan, Ahmed E.. (2013). The Evolution of the R Software Ecosystem. Proceedings of the Euromicro Conference on Software Maintenance and Reengineering, CSMR. 243-252. 10.1109/CSMR.2013.33.*
 ]
----
-# Classifying R Packages within an Installation
-
-- Within an installation, two classifications of R packages are proposed:
-
-1. **Intended for Use**. These will be loaded directly by a user during an R session.
-2. **Imports**. These packages are required to be installed in order to use the Intended for Use packages. They are comparable to a system dependency, or the ‘back-end’ code supporting a user interface.
-
-- A risk-based approach to validation should focus on the way that components of the system are **intended to be used**.
-
-
 
 ---
-#	An R Package Risk Assessment Framework
+# Why Risk-based?
 
-We propose to assess the risk of contributed R packages based on four criteria:
+## FDA
 
--	Purpose
+<blockquote>
+"We recommend that you base your approach on a justified and <b>documented risk assessment</b> and a determination of the potential of the system to affect product quality and safety, and record integrity"
+.right[-- <cite>[Guidance for Industry Part 11, Electronic Records; Electronic Signatures — Scope and Application](https://www.fda.gov/media/75414/download)</cite>]
+</blockquote>
 
--	Maintenance Good Practice (Software Development Life Cycle, SDLC)
+## EMA
 
--	Community Usage
+<blockquote>
+"The sponsor may rely on qualification documentation provided by the vendor, if the qualification activities performed by the vendor have been assessed as adequate. However, the sponsor may also have to perform additional qualification (and validation) activities based on a <b>documented risk assessment.</b>"
+.right[-- <cite>[Notice to sponsors on validation and qualification of computerised systems used in clinical trials, EMA, 07-Apr-2020](https://www.ema.europa.eu/en/documents/regulatory-procedural-guideline/notice-sponsors-validation-qualification-computerised-systems-used-clinical-trials_en.pdf)</cite>]
+</blockquote>
 
--	Testing (Also part of an SDLC)
+- Note: The above documents describe computerized systems and neither addresses address programming languages directly
+
+
 
 <!-- --- -->
-<!-- # Pupose -->
+<!-- # Classifying R Packages within an Installation -->
+
+<!-- - Within an installation, two classifications of R packages are proposed: -->
+
+<!-- 1. **Intended for Use**. These will be loaded directly by a user during an R session. -->
+<!-- 2. **Imports**. These packages are required to be installed in order to use the Intended for Use packages. They are comparable to a system dependency, or the ‘back-end’ code supporting a user interface. -->
+
+<!-- - A risk-based approach to validation should focus on the way that components of the system are **intended to be used**. -->
+
+
+
+<!-- --- -->
+<!-- #	An R Package Risk Assessment Framework -->
+
+<!-- We propose to assess the risk of contributed R packages based on four criteria: -->
+
+<!-- -	Purpose -->
+
+<!-- -	Maintenance Good Practice (Software Development Life Cycle, SDLC) -->
+
+<!-- -	Testing (Also part of an SDLC) -->
+
+<!-- -	Community Usage -->
+
+
+<!-- --- -->
+<!-- # Purpose -->
 
 <!-- - What will the package used for? -->
 
@@ -325,20 +329,24 @@ class: inverse, middle, center
 
 - This risk does *not* represent
     - the risk of damaging the sytem in which the package is installed, or
-    - the risk that the internal (statistical) functions are correct.
+    - the risk that the internal (statistical) functions are correct
 
 
 - Example:
   - low risk package: `ggplot2` (risk = 0.21)
-  - High risk package: `tidymodels/stacks` (risk = 0.9). Does this mean we can't use it?
+  - High risk package: `tidymodels/stacks` (risk = 0.9)
+
+<!-- --- -->
+
+<!-- # Example using **riskmetric** -->
 
 ---
-
 # Example using **riskmetric**
 
-```{r, message = FALSE, warning = FALSE, cache = TRUE}
-# devtools::install_github("pharmar/riskmetric")
 
+```{r, message = FALSE, warning = FALSE, cache = TRUE, echo = FALSE}
+# devtools::install_github("pharmar/riskmetric")
+library(dplyr)
 library(riskmetric)
 
 metrics <- pkg_ref(c("ggplot2", "stacks")) %>%
@@ -346,16 +354,15 @@ metrics <- pkg_ref(c("ggplot2", "stacks")) %>%
   pkg_assess() %>%
   pkg_score()
 
-metrics
 ```
 
 <!-- TODO -->
 <!-- Can you provide a version number to riskmetric? -->
 <!-- Describe each function above -->
 
----
 
-# Example using **riskmetric**
+
+
 
 ```
 # devtools::install_github("pharmar/riskmetric")
@@ -373,7 +380,8 @@ metrics
 
 <br>
 
- ```{r, echo = FALSE, message = FALSE, warning = FALSE, cache = TRUE}
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, cache = TRUE}
  
  metrics %>%
  mutate(risk = pkg_score) %>%
@@ -382,7 +390,7 @@ metrics
  kbl(., booktabs = T) %>%
  kable_styling(c("striped", "hover"), font_size = 15)
  
- ```
+```
 
 ---
 
@@ -405,19 +413,19 @@ background-position: 50% 50%
 
 
 
----
-# Testing
+<!-- --- -->
+<!-- # Testing -->
 
-- Focus area
+<!-- - Focus area -->
 
-- Current discussions
-    - May be able to make use of author tests in some circumstances
-    - Testing for stats packages may not *always* be required
-    - Testing to feed back into risk assessment
+<!-- - Current discussions -->
+<!--     - May be able to make use of author tests in some circumstances -->
+<!--     - Testing for stats packages may not *always* be required -->
+<!--     - Testing to feed back into risk assessment -->
 
-- Aim to write white paper for release 1H2021
+<!-- - Aim to write white paper for release 1H2021 -->
 
-- Test framework to be developed based on testthat
+<!-- - Test framework to be developed based on testthat -->
 
 ---
 layout: false
@@ -478,7 +486,7 @@ background-position: 90% 16%
     - Our TAs from the workshop
 
 
-- The R Validation Hub (PSI, EFR Consortium)
+- The R Validation Hub (PSI, EFSPI, R Consortium)
 
 
 Thanks to all those involved in pulling together the R/Pharma conference!
