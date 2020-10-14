@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>RVH Implementation</title>
+    <meta charset="utf-8" />
+    <script src="libs/kePrint-0.0.1/kePrint.js"></script>
+    <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css\default.css" type="text/css" />
+    <link rel="stylesheet" href="css\default-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="css\metropolis.css" type="text/css" />
+    <link rel="stylesheet" href="css\metropolis-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="css\custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+layout: false
+class: title-slide, middle, center
+
+.pull-farleft[
+
+.font180[Implementing A Risk-based Approach&lt;br&gt;to R Validation]
+
+R/Pharma, 2020 &lt;br&gt;
+
+&lt;div class="row"&gt;
+&lt;div class="column"&gt;
+  &lt;img class="profile" src="images/andy-nicholls.jpg" alt="Andy Nicholls"&gt;
+  &lt;div class="profile-name"&gt;Andy Nicholls&lt;br&gt;On behalf of the R Validation Hub&lt;/div&gt;
+&lt;/div&gt;
+
+
+]
+
+
+
+&lt;!----------------------------------------------------------------------------&gt;
+
+---
+layout: false
+class: development, middle, center
+# WARNING
+
+## If you attended last week's workshop, don't expect anything new!
+
+
+&lt;!-- --- --&gt;
+&lt;!-- layout: false --&gt;
+&lt;!-- class: development, middle, center --&gt;
+&lt;!-- # WARNING 2 --&gt;
+
+&lt;!-- ## Our workshop was 3 hours, I have 20 minutes... --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- layout: false --&gt;
+&lt;!-- class: development, middle, center --&gt;
+&lt;!-- # WARNING 2 --&gt;
+
+&lt;!-- ## Our workshop was 3 hours, I have 19 minutes... --&gt;
+
+
+
+
+---
+# Outline
+
+- The R Validation Hub
+
+- White Paper: [A Risk-based Approach for Assessing R package Accuracy within a Validated Infrastructure](https://www.pharmar.org/white-paper/)
+
+- Implementation
+
+- The Future
+
+
+
+---
+# Mission
+
+&lt;img src="images/pharmaRlogo_large.png" alt="R Validation Hub"&gt;
+
+&gt; The R Validation Hub is a cross-industry initiative whose mission is to enable the use of R by the Bio-Pharmaceutical Industry in a regulatory setting, where the output may be used in submissions to regulatory agencies. 
+
+
+---
+# Who are we?
+
+- Formed in 2018 by members of PSI’s AIMS SIG
+- Now an [R Consortium Working Group](https://www.r-consortium.org/projects/isc-working-groups)
+- Executive Committee
+    - **Andy Nicholls (GSK)**
+    - Marly Gotti (Biogen)
+    - Lyn Taylor (Phastar)
+    - Joe Rickert (RStudio / R Consortium)
+    - Juliane Manitz (Merck KGaA / EMD Serono)
+    - Yilong Zhang (MSD)
+    - Doug Kelkhoff (Genentech)
+    - Keaven Anderson (MSD)
+* ~100 members from multiple organisations across the pharmaceutical sector
+
+&lt;img src="images/psi.png" alt="R Validation Hub" height=80 style="margin:5px 50px"&gt; 
+&lt;img src="images/efspi.png" alt="R Validation Hub" height=80 style="margin:5px 50px"&gt; 
+&lt;img src="images/rconsort.png" alt="R Validation Hub" height=80 style="margin:5px 50px"&gt;
+
+
+
+&lt;!----------------------------------------------------------------------------&gt;
+
+
+---
+# Regulations
+
+FDA: “…statistical software is **not explicitly discussed** in [21 CFR Part 11]”
+
+ICH: “… **should be reliable**, and documentation of **appropriate software testing procedures** should be available”
+
+&lt;a href = "https://www.fda.gov/downloads/ForIndustry/DataStandards/StudyDataStandards/UCM587506.pdf"&gt;&lt;img src="images/fda_clarifying.png" alt="source: FDA Statistical Software Clarifying Statement" height=400 &gt;&lt;/a&gt;
+
+
+
+
+&lt;!-- --- --&gt;
+&lt;!-- # Validation / Qualification / Verification --&gt;
+
+&lt;!-- ## The Validation Misnomer --&gt;
+
+&lt;!-- &lt;blockquote&gt; --&gt;
+&lt;!-- "The term &lt;b&gt;qualification&lt;/b&gt; is used in this notice to describe &lt;b&gt;verification&lt;/b&gt; of system functionality. The term &lt;b&gt;validation&lt;/b&gt; is used to describe the process of establishing and documenting that the specified requirements of a computerised system can be consistently fulfilled from design until decommissioning of the system or transition to a new system (ICH E6(R2), section 1.65), i.e. it operates to defined specifications and defined procedures (SOPs) by a trained user." --&gt;
+&lt;!-- .right[-- &lt;cite&gt;[Notice to sponsors on validation and qualification of computerised systems used in clinical trials, EMA, 07-Apr-2020](https://www.ema.europa.eu/en/documents/regulatory-procedural-guideline/notice-sponsors-validation-qualification-computerised-systems-used-clinical-trials_en.pdf)&lt;/cite&gt;] --&gt;
+&lt;!-- &lt;/blockquote&gt; --&gt;
+
+
+
+&lt;!----------------------------------------------------------------------------&gt;
+---
+layout: false
+class: inverse, middle, center
+
+# White Paper: A Risk-based Approach for Assessing R package Accuracy within a Validated Infrastructure
+
+.white[
+**Andy Nicholls**, Statistics Director, Head of Statistical Data Sciences, GSK
+
+**Paulo R. Bargo**, Director Scientific Computing, Statistics &amp; Decision Sciences, Janssen R&amp;D
+
+**John Sims**, Director, Analytical Systems Architect &amp; Data Science - Pfizer Vaccine Research
+
+]
+
+
+&lt;!-- --- --&gt;
+&lt;!-- # Validation, R and R Packages --&gt;
+
+&lt;!-- The FDA provide a clear definition of validation in the [Glossary of Computer System Software Development Terminology](https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/inspection-guides/glossary-computer-system-software-development-terminology-895).  --&gt;
+
+&lt;!-- This can be broken down into three core components: --&gt;
+
+&lt;!-- 1.	Accuracy --&gt;
+&lt;!-- 2.	Reproducibility --&gt;
+&lt;!-- 3.	Traceability  --&gt;
+
+&lt;!-- **The focus of the white paper is accuracy.** --&gt;
+
+
+---
+background-image: url("images/German-et-al.png")
+background-size: 25%
+background-position: 90% 16%
+# What do we mean by 'R'?
+
+- **Core R (Base+Recommended)** - Low risk
+    - See [R: Regulatory Compliance and Validation Issues...](https://www.r-project.org/doc/R-FDA.pdf). 
+    
+    
+- **Contributed** - Variable risk  
+    - Many different authors
+    - Varying SDLCs
+    - Varying levels of popularity
+    - Potentially lots of unknowns
+
+&lt;!-- &lt;img src="images/German-et-al.png" alt="source: German-et-al" height="120px" &gt; --&gt;
+
+
+We propose a risk-based approach to establish accuracy/validity for contributed packages
+
+.footnote[
+*Source: German, D.M. &amp; Adams, Bram &amp; Hassan, Ahmed E.. (2013). The Evolution of the R Software Ecosystem. Proceedings of the Euromicro Conference on Software Maintenance and Reengineering, CSMR. 243-252. 10.1109/CSMR.2013.33.*
+]
+
+---
+# Why Risk-based?
+
+## FDA
+
+&lt;blockquote&gt;
+"We recommend that you base your approach on a justified and &lt;b&gt;documented risk assessment&lt;/b&gt; and a determination of the potential of the system to affect product quality and safety, and record integrity"
+.right[-- &lt;cite&gt;[Guidance for Industry Part 11, Electronic Records; Electronic Signatures — Scope and Application](https://www.fda.gov/media/75414/download)&lt;/cite&gt;]
+&lt;/blockquote&gt;
+
+## EMA
+
+&lt;blockquote&gt;
+"The sponsor may rely on qualification documentation provided by the vendor, if the qualification activities performed by the vendor have been assessed as adequate. However, the sponsor may also have to perform additional qualification (and validation) activities based on a &lt;b&gt;documented risk assessment.&lt;/b&gt;"
+.right[-- &lt;cite&gt;[Notice to sponsors on validation and qualification of computerised systems used in clinical trials, EMA, 07-Apr-2020](https://www.ema.europa.eu/en/documents/regulatory-procedural-guideline/notice-sponsors-validation-qualification-computerised-systems-used-clinical-trials_en.pdf)&lt;/cite&gt;]
+&lt;/blockquote&gt;
+
+- Note: The above documents describe computerized systems and neither addresses address programming languages directly
+
+
+
+&lt;!-- --- --&gt;
+&lt;!-- # Classifying R Packages within an Installation --&gt;
+
+&lt;!-- - Within an installation, two classifications of R packages are proposed: --&gt;
+
+&lt;!-- 1. **Intended for Use**. These will be loaded directly by a user during an R session. --&gt;
+&lt;!-- 2. **Imports**. These packages are required to be installed in order to use the Intended for Use packages. They are comparable to a system dependency, or the ‘back-end’ code supporting a user interface. --&gt;
+
+&lt;!-- - A risk-based approach to validation should focus on the way that components of the system are **intended to be used**. --&gt;
+
+
+
+&lt;!-- --- --&gt;
+&lt;!-- #	An R Package Risk Assessment Framework --&gt;
+
+&lt;!-- We propose to assess the risk of contributed R packages based on four criteria: --&gt;
+
+&lt;!-- -	Purpose --&gt;
+
+&lt;!-- -	Maintenance Good Practice (Software Development Life Cycle, SDLC) --&gt;
+
+&lt;!-- -	Testing (Also part of an SDLC) --&gt;
+
+&lt;!-- -	Community Usage --&gt;
+
+
+&lt;!-- --- --&gt;
+&lt;!-- # Purpose --&gt;
+
+&lt;!-- - What will the package used for? --&gt;
+
+
+&lt;!-- - Is it... --&gt;
+
+
+&lt;!-- 1. Statistical? --&gt;
+&lt;!-- 2. Non-statistical? --&gt;
+
+
+&lt;!-- - Hence, how difficult is it for an end user to identify errors? --&gt;
+
+
+&lt;!-- &gt; "Tests should be written for all statistical modelling functions within an Intended for Use Statistical Package, regardless of the risk assessment." --&gt;
+
+
+&lt;!-- - To be challenged later... --&gt;
+
+
+
+&lt;!-- --- --&gt;
+&lt;!-- # Maintenance / Testing / Community Usage --&gt;
+
+&lt;!-- - Development and **maintenance** best practice are essential for any software --&gt;
+&lt;!--     - How are bugs managed? --&gt;
+&lt;!--     - What is the documentation like? --&gt;
+&lt;!--     - Is the source code on GitHub? --&gt;
+&lt;!-- - **Testing** is a crucial part of an SDLC and another specific maintenance best practice metric --&gt;
+
+&lt;!-- - Increased exposure to users (**community usage**) helps to reduce risk --&gt;
+
+&lt;!-- - More on these coming up... --&gt;
+
+---
+# Proposed Workflow
+ 
+&lt;img src="images/Assessing-package-accuracy.png" alt="source: Assessing Package Accuracy"&gt;
+
+
+
+
+&lt;!----------------------------------------------------------------------------&gt;
+---
+layout: false
+class: inverse, middle, center
+# Implementation
+
+
+---
+
+# The **riskmetric** package
+
+- [pharmar.github.io/riskmetric/](https://pharmar.github.io/riskmetric/)
+
+
+- Measures the risk of using an R package. 
+
+
+- Calculated based on a number of metrics meant to evaluate development best practices, code documentation, community engagement, and development sustainability. 
+
+
+- This risk does *not* represent
+    - the risk of damaging the sytem in which the package is installed, or
+    - the risk that the internal (statistical) functions are correct
+
+
+- Example:
+  - low risk package: `ggplot2` (risk = 0.21)
+  - High risk package: `tidymodels/stacks` (risk = 0.9)
+
+&lt;!-- --- --&gt;
+
+&lt;!-- # Example using **riskmetric** --&gt;
+
+---
+# Example using **riskmetric**
+
+
+
+
+&lt;!-- TODO --&gt;
+&lt;!-- Can you provide a version number to riskmetric? --&gt;
+&lt;!-- Describe each function above --&gt;
+
+
+
+
+
+```
+# devtools::install_github("pharmar/riskmetric")
+
+library(riskmetric)
+
+metrics &lt;- pkg_ref(c("ggplot2", "stacks")) %&gt;%
+  as_tibble() %&gt;%
+  pkg_assess() %&gt;%
+  pkg_score()
+
+metrics
+ 
+```
+
+&lt;br&gt;
+
+
+&lt;table class="table table-striped table-hover" style="font-size: 15px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; package &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; version &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; risk &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; downloads_1yr &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; bugs_status &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; has_maintainer &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; news_current &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; has_vignettes &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; export_help &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; ... &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; ggplot2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3.3.1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.3333333 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; ... &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; stacks &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.0.0.9000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8333333 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; ... &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+# The Risk Assessment Shiny Application
+
+- Front end visualisations for `riskmetric`
+
+- User feedback
+
+- A database to store collected metrics / comments
+
+- Reporting capabilities
+
+
+---
+background-image: url("images/risk_assess.png")
+background-size: 98% 
+background-position: 50% 50%
+# The Risk Assessment App
+
+
+
+&lt;!-- --- --&gt;
+&lt;!-- # Testing --&gt;
+
+&lt;!-- - Focus area --&gt;
+
+&lt;!-- - Current discussions --&gt;
+&lt;!--     - May be able to make use of author tests in some circumstances --&gt;
+&lt;!--     - Testing for stats packages may not *always* be required --&gt;
+&lt;!--     - Testing to feed back into risk assessment --&gt;
+
+&lt;!-- - Aim to write white paper for release 1H2021 --&gt;
+
+&lt;!-- - Test framework to be developed based on testthat --&gt;
+
+---
+layout: false
+class: inverse, middle, center
+# The Future
+
+
+---
+background-image: url("images/roadmap.jpg")
+background-position: 90% 16%
+# Our Roadmap
+
+## Process and Communication
+.grey[
+- Publish website
+- Agree high level process
+- White paper for overall approach
+]
+- White paper on testing
+- [TBC] stats modelling handbook
+
+## Qualification Tools
+.grey[
+- Key risks added to riskmetric 
+- Release Risk Assessment app v1
+]
+- CRAN release of riskmetric
+- Modularisation of app for co-development with riskmetric
+- Create test framework
+- Release first batch of tests
+    
+
+
+
+---
+# Join us!
+
+- Keep up to date at https://www.pharmar.org/
+    - Blog posts
+    - Presentations
+    - White paper
+    
+    
+- Tools available on [GitHub](https://github.com/pharmaR)
+    - The riskmetric R Package
+    - Risk Assessment App 
+    
+
+- To contribute, send a message to [psi.aims.r.validation@gmail.com](mailto:psi.aims.r.validation@gmail.com)
+
+    
+- Else, join the [mailing list](https://lists.r-consortium.org/g/RConsortium-Validation-Hub) today!
+
+---
+# Acknowledgements
+
+- Marly Gotti (Biogen) for this week's workshop and this slide template
+    - Our TAs from the workshop
+
+
+- The R Validation Hub (PSI, EFSPI, R Consortium)
+
+
+Thanks to all those involved in pulling together the R/Pharma conference!
+
+
+
+---
+# Further Reading
+
+The following have played an important role in the formation of the white paper and this workshop
+
+
+- **ICH**
+    - [E9](https://www.ema.europa.eu/en/ich-e9-statistical-principles-clinical-trials#current-version-section)
+
+
+- **FDA**
+    - [FDA Statistical Software Clarifying Statement](https://www.fda.gov/downloads/ForIndustry/DataStandards/StudyDataStandards/UCM587506.pdf)
+    - [21 CFR Part 11](https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfcfr/CFRSearch.cfm?CFRPart=11&amp;showFR=1)
+    - [Guidance for Industry Part 11, Electronic Records; Electronic Signatures — Scope and Application](https://www.fda.gov/media/75414/download)
+    - [Glossary of Computer System Software Development Terminology](https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/inspection-guides/glossary-computer-system-software-development-terminology-895)
+    - [General Principles of Software Validation; Final Guidance for Industry and FDA Staff](https://www.fda.gov/media/73141/download)
+
+
+- **EMA**
+    - [Notice to sponsors on validation and qualification of computerised systems used in clinical trials](https://www.ema.europa.eu/en/documents/regulatory-procedural-guideline/notice-sponsors-validation-qualification-computerised-systems-used-clinical-trials_en.pdf)
+    - [Q&amp;A: Good clinical practice (GCP)](https://www.ema.europa.eu/en/human-regulatory/research-development/compliance/good-clinical-practice/qa-good-clinical-practice-gcp)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "13:9",
+"highlightLanguage": "R",
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
